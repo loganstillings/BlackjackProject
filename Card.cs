@@ -1,6 +1,5 @@
 using System;
 
-
 namespace DeckOfCards{
     public class Card{
 
@@ -34,20 +33,21 @@ namespace DeckOfCards{
         //     }
         // } set{}}
 
-
+        public string image;
 
 
 
         public int num_val;
         public string suit;
-        public Card(string s, int num, int pt){
+        public Card(string s, int num, int pt, string img){
             suit = s;
             num_val = num;  
             points = pt;
+            image = img;
         }
 
         public override string ToString(){
-            return val + " of " + suit;
+            return image;
         }
     }
 }
