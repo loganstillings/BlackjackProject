@@ -14,7 +14,10 @@ namespace DeckOfCards{
             int points;
             for(int i = 0; i < suits.Length; i++){
                 for(int n = 1; n < 14; n++){
-                    if (n>10){
+                    if(n == 1){
+                        points = 11;
+                    }
+                    else if (n>10){
                         points = 10;
                     }else{
                         points = n;

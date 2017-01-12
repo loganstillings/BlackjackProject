@@ -8,12 +8,6 @@ namespace DeckOfCards{
              if(num_val > 1 && num_val < 11){
                 return num_val.ToString();
             } 
-            // else {
-            //     // switch(num{
-            //     //     case 11: "J";
-            //     // } //not a good idea to mix switch and if/else
-
-            // }
             else if(num_val == 11){ //cannot use val. it will call val get function and get stuck in infinite looop. Instead use "return"
                 return "Jack";
             }
@@ -31,7 +25,19 @@ namespace DeckOfCards{
             }
         }
         }
+
+        //HOW TO MAKE THE ACE CHANGE VALUE?
         public int points;
+        // {get{
+        //     if(num_val == 1 && sum < 10){
+        //         return 11;
+        //     }
+        // } set{}}
+
+
+
+
+
         public int num_val;
         public string suit;
         public Card(string s, int num, int pt){
