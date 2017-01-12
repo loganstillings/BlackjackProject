@@ -29,6 +29,16 @@ namespace DeckOfCards{
         }
 
         public Card deal(){
+            // if(cards.Count%2 == 0){
+            //     for(int i = 0; i<cards.Count;i++){
+            //         if(cards[i].val == "A"){
+            //             Card temp = cards[i];    // to generate Ace for testing
+            //             cards[i]= cards[0];
+            //             cards[0]= temp;
+            //             break;
+            //         }
+            //     }
+            // }
             Card toReturn = cards[0];
             cards.RemoveAt(0);
             return toReturn;

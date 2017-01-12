@@ -14,6 +14,7 @@ namespace DeckOfCards{
         public Card Draw(Deck deck){
             Card drawn = deck.deal();
             hand.Add(drawn);
+            checkForAce(drawn);
             sum += drawn.points;
             return drawn;
         }
@@ -33,40 +34,76 @@ namespace DeckOfCards{
         public void Display_player(List<Card> hand){
             System.Console.WriteLine("This is your hand:");
                 for(int i = 0; i <hand.Count; i++){
-                    System.Console.Write(hand[i] + " ");
+                    System.Console.WriteLine("\t" + hand[i] + " ");
                 
                 }
         }
-        public void Display_dealer(List<Card> hand){
+        public void Display_dealer(List<Card> hand, int idx){
             System.Console.WriteLine("This is my hand:");
-                for(int i = 1; i <hand.Count; i++){
-                    System.Console.Write(hand[i] + " ");
+                for(int i = idx; i <hand.Count; i++){
+                    System.Console.WriteLine("\t" + hand[i] + " ");
                 }
         }
 
-        public void checkForAce(List<Card> hand){
-            if (sum > 21){
-                for( int i = 0; i < hand.Count; i++){
-                    if(hand[i].val == "Ace"){
-                        hand[i].points = 1;
-                        sum -= 10;
-                        break; //CONSIDER TWO ACES
-                    }
+        private void checkForAce(Card card){
+            if(card.val == "A")
+            { 
+                if(sum<=10){
+                    card.points = 11;
                 }
-            }
+                else{
+                   card.points = 1; 
+                }
+            }           
+        }
+
+        public void playAgain(Deck deck, Player dealer){
+            System.Console.WriteLine("Play again? (y/n)");
+                string playagain = Console.ReadLine();
+                if(playagain == "y"){
+                    deck.reset();
+                    deck.shuffle();
+                    sum = 0;
+                    dealer.sum = 0;
+                    dealer.hand.Clear();
+                    hand.Clear();
+
+                    Draw(deck); 
+                    Draw(deck);
+                    dealer.Draw(deck);
+                    dealer.Draw(deck);
+
+                    Display_player(hand);
+                    System.Console.WriteLine("\nYou have {0} points", sum);
+                    dealer.Display_dealer(dealer.hand, 1);
+
+                    //start game
+                    if(sum == 21){
+                        System.Console.WriteLine("Blackjack! You win!");
+                        playAgain(deck, dealer);
+                    }
+                    else{
+                        System.Console.WriteLine("type hit or stay");
+                        string play = Console.ReadLine();
+                        game(play, deck, dealer);
+                    }
+                }  
+                else{
+                    System.Console.WriteLine("Bye,See you again!");
+                }
         }
 
         public void game(string play, Deck deck, Player dealer){
             if(sum == 21){
                 System.Console.WriteLine("Blackjack! You win!");
+                playAgain(deck, dealer);
             }
-            checkForAce(hand);//in case you get two aces
-
-            while(play == "hit"){
+            else{
+                while(play == "hit"){
                      Draw(deck);
                      Display_player(hand);
                      System.Console.WriteLine("You have {0} points", sum);
-                     checkForAce(hand);
+                     
                      if(sum >= 21){
                          break;
                      }
@@ -75,28 +112,24 @@ namespace DeckOfCards{
                 }
 
                 if(play =="stay"){
-                    checkForAce(dealer.hand);
                     while(dealer.sum < 17){
                         System.Console.WriteLine("\nDealer has {0} points", dealer.sum);
                         System.Console.WriteLine("Dealer draws a card");
                         dealer.Draw(deck);
-                        dealer.Display_player(dealer.hand);
-                        checkForAce(dealer.hand);
+                        dealer.Display_dealer(dealer.hand, 0);
+
                     }
                     if(dealer.sum < 22){
                         if(dealer.sum < sum){
-                             checkForAce(dealer.hand);
                             System.Console.WriteLine("\nDealer has {0} points", dealer.sum);
                             System.Console.WriteLine("You win!");
                         }
                         else{
-                             checkForAce(dealer.hand);
                             System.Console.WriteLine("\nDealer has {0} points", dealer.sum);
                             System.Console.WriteLine("You lose :(");
                         }
                     }
                     if(dealer.sum >= 22){
-                         checkForAce(dealer.hand);
                         System.Console.WriteLine("Dealer busts, you win!");
                     }
                 }
@@ -107,6 +140,10 @@ namespace DeckOfCards{
                 if(sum > 21){
                     System.Console.WriteLine("Better luck next time.");
                 }
+
+                playAgain(deck, dealer);
+              
         }
     }
+}
 }

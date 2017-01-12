@@ -31,20 +31,22 @@ namespace DeckOfCards
 
                 //display hands
                 player1.Display_player(player1.hand);
-                System.Console.WriteLine("\nYou have {0} points", player1.sum);
-                dealer.Display_dealer(dealer.hand);
+                System.Console.WriteLine("You have {0} points"+"\n", player1.sum);
+                dealer.Display_dealer(dealer.hand, 1);
 
                 //start game
-                System.Console.WriteLine("type hit or stay");
-                string play = Console.ReadLine();
-                player1.game(play, deck, dealer);
-
-                //play again?
-                System.Console.WriteLine("Play again? (y/n)");
-                string playAgain = Console.ReadLine();
-                if(playAgain == "y"){
+                if(player1.sum == 21){
+                    System.Console.WriteLine("Blackjack! You win!"+"\n");
+                    player1.playAgain(deck, dealer);
+                }
+                else{
+                    System.Console.WriteLine("**Type hit or stay**");
+                    string play = Console.ReadLine();
                     player1.game(play, deck, dealer);
                 }
+                
+
+                //play again?
             }
 
         }

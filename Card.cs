@@ -9,16 +9,16 @@ namespace DeckOfCards{
                 return num_val.ToString();
             } 
             else if(num_val == 11){ //cannot use val. it will call val get function and get stuck in infinite looop. Instead use "return"
-                return "Jack";
+                return "J";
             }
             else if(num_val == 12){
-                return "Queen";
+                return "Q";
             }
             else if(num_val == 13){
-                return "King";
+                return "K";
             }
              else if(num_val == 1){
-                return "Ace";
+                return "A";
             }
             else{
                 return "Joker";
